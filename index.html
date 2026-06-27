@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAKA HIGH SCHOOLS - RESULTS</title>
+    <title>BIILE EXAMINATION BOARD - RESULTS</title>
     <style>
         :root { --primary: #1e3a8a; --bg: #f3f4f6; --dark: #1f2937; }
         body { font-family: Arial, sans-serif; background: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
@@ -32,13 +32,12 @@
 <body>
 
 <div class="card">
-    <!-- Halkan waxaa loogu habeeyay sawirkaaga Logo.jpg -->
     <div class="logo"><img src="Logo.jpg" alt="Logo"></div>
-    <h1>YAKA HIGH SCHOOLS SCH</h1>
+    <h1>BIILE EXAMINATION BOARD </h1>
     <h2>Academic Year: 2025 - 2026</h2>
     
     <div class="input-group">
-        <label for="rollNo">Geli Roll Number-ka Ardayga:</label>
+        <label for="rollNo">Geli Roll Number-kaaga :</label>
         <input type="text" id="rollNo" placeholder="Tusaale: YK26001001">
     </div>
     
@@ -57,7 +56,8 @@
 </div>
 
 <script>
-    const csvUrl = "https://google.com";
+    // Toos waxaa loogu xidhay faylka GitHub dhexdiisa ahaanaya
+    const csvUrl = "data.csv";
 
     async function searchResult() {
         const input = document.getElementById('rollNo').value.trim();
@@ -68,10 +68,12 @@
         try {
             const res = await fetch(csvUrl);
             const text = await res.text();
+            
             const lines = text.split("\n").map(l => l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/"/g, '').trim()));
             
             let student = null;
-            for(let i = 2; i < lines.length; i++) {
+            // Raadi Roll Number-ka tiirka 2aad (Index 1)
+            for(let i = 1; i < lines.length; i++) {
                 if(lines[i][1] === input) { 
                     student = lines[i]; 
                     break; 
@@ -82,13 +84,14 @@
                 errBox.style.display = "none";
                 document.getElementById('rName').innerText = student[0];
                 document.getElementById('rRoll').innerText = student[1];
-                document.getElementById('rTotal').innerText = student[13];
-                document.getElementById('rAvg').innerText = student[14];
-                document.getElementById('rGrade').innerText = student[15];
+                document.getElementById('rTotal').innerText = student[13] || student[student.length - 4];
+                document.getElementById('rAvg').innerText = student[14] || student[student.length - 3];
+                document.getElementById('rGrade').innerText = student[15] || student[student.length - 2];
                 
                 const status = document.getElementById('rStatus');
-                status.innerText = student[16];
-                status.className = student[16].toUpperCase().includes('PASS') ? "badge pass" : "badge fail";
+                const statusText = student[16] || student[student.length - 1] || 'N/A';
+                status.innerText = statusText;
+                status.className = statusText.toUpperCase().includes('PASS') ? "badge pass" : "badge fail";
                 resBox.style.display = "block";
             } else {
                 resBox.style.display = "none"; 
