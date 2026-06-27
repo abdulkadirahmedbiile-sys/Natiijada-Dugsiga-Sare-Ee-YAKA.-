@@ -96,3 +96,54 @@
         "YK26001017": { name: "MAXAMED MAXAMUD CABDI", islam: 67, arabi: 60, phy: 52, math: 52, som: 89, bio: 71, chem: 66, ict: 73, eng: 89, geo: 70, his: 63, total: "752", avg: "68.36", grade: "C+", status: "PASS" },
         "YK26001018": { name: "C/LAAHI MAXAMED C/LAHI", islam: 50, arabi: 79, phy: 50, math: 46, som: 81, bio: 71, chem: 36, ict: 70, eng: 97, geo: 67, his: 66, total: "713", avg: "64.81", grade: "C", status: "PASS" },
         "YK26001019": { name: "AXMED C/RASHID XASAN", islam: 100, arabi: 87, phy: 47, math: 50, som: 45, bio: 45, chem: 45, ict: 73, eng: 95, geo: 73, his: 70, total: "645", avg: "58.22", grade: "C", status: "PASS" },
+        // Shaqada raadinta natiijada (Search function)
+    function searchResult() {
+        const rollNoInput = document.getElementById("rollNo").value.trim().toUpperCase();
+        const errorDiv = document.getElementById("error");
+        const resultDiv = document.getElementById("result");
+
+        // Hubi in ardayga xogtiisa la helay
+        if (ardaydaXogta[rollNoInput]) {
+            const arday = ardaydaXogta[rollNoInput];
+
+            // Qaybta macluumaadka guud
+            document.getElementById("rName").innerText = arday.name;
+            document.getElementById("rRoll").innerText = rollNoInput;
+
+            // Qaybta dhibcaha maadooyinka
+            document.getElementById("sIslam").innerText = arday.islam;
+            document.getElementById("sArabi").innerText = arday.arabi;
+            document.getElementById("sPhy").innerText = arday.phy;
+            document.getElementById("sMath").innerText = arday.math;
+            document.getElementById("sSom").innerText = arday.som;
+            document.getElementById("sBio").innerText = arday.bio;
+            document.getElementById("sChem").innerText = arday.chem;
+            document.getElementById("sIct").innerText = arday.ict;
+            document.getElementById("sEng").innerText = arday.eng;
+            document.getElementById("sGeo").innerText = arday.geo;
+            document.getElementById("sHis").innerText = arday.his;
+
+            // Qaybta natiijada guud
+            document.getElementById("rTotal").innerText = arday.total;
+            document.getElementById("rAvg").innerText = arday.avg + "%";
+            document.getElementById("rGrade").innerText = arday.grade;
+            
+            // Habaynta Badge-ka (PASS ama FAIL)
+            const statusBadge = document.getElementById("rStatus");
+            statusBadge.innerText = arday.status;
+            if (arday.status === "PASS") {
+                statusBadge.className = "badge pass";
+            } else {
+                statusBadge.className = "badge fail";
+            }
+
+            // Muuji natiijada, qari fariinta khaldan
+            resultDiv.style.display = "block";
+            errorDiv.style.display = "none";
+        } else {
+            // Haddii la waayo, muuji fariinta khaldan, qari natiijada
+            errorDiv.style.display = "block";
+            resultDiv.style.display = "none";
+        }
+    }
+</script>
